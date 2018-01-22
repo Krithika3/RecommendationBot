@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="container-fluid">
-    <h1>Chat Bot</h1>
+    <h1>Shopping Chat Bot</h1>
     <div>
       <div id="chatbox">
         <p class="botText"><span>Hi! I'm ebay Assistant.</span></p>
@@ -26,7 +26,7 @@
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           $.get("/get", { msg: rawText }).done(function(data) {
             if(data.startsWith("http")){
-            var botHtml = '<p class="botText"><span><a href=' + data + '>Here is an ebay link to the ' + data + '</a></span></p>';
+            var botHtml = '<p class="botText"><span><a href=' + data + '>Here is an ebay link to the item </a></span></p>';
           }else{
             var botHtml = '<p class="botText"><span>' + data + '</span></p>';
           }

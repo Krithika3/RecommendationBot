@@ -55,16 +55,15 @@ def get_ebay_data(config, userText, keyword):
         })
 
 
-    dictstr = response.dict()
-    print dictstr['itemSearchURL']
-    return dictstr['itemSearchURL']
+    item_response = response.dict()
+    return item_response['itemSearchURL']
  
 
 # This returns regularly trained based on the query using Chatterbot
 def get_regular_trained_data(userText):
     english_bot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
     english_bot.set_trainer(ChatterBotCorpusTrainer)
-    english_bot.train("chatterbot.corpus.english")
+    english_bot.train("chatterbot.corpus.english.greetings")
     
     return str(english_bot.get_response(userText))
 
