@@ -24,7 +24,7 @@ def get_bot_response():
 
     userText = request.args.get('msg')
 
-    
+    #Check all words in the config dictionary to see the kind of word.
     for keyword in keywords:
         if keyword in userText:
             return get_ebay_data(config, userText, keyword)         
