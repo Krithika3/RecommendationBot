@@ -24,9 +24,10 @@ def get_bot_response():
 
     userText = request.args.get('msg')
 
+    
     for keyword in keywords:
         if keyword in userText:
-           return get_ebay_data(config, userText, keyword)         
+            return get_ebay_data(config, userText, keyword)         
             
         else:
 
