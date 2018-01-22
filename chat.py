@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
+
+# This libray is authored by Tim Keefer here: https://github.com/timotheus/ebaysdk-python
 import ebaysdk
+
 import ConfigParser
+
 from ebaysdk.finding import Connection as finding
 
 app = Flask(__name__)
