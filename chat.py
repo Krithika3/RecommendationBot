@@ -1,6 +1,3 @@
-from flask import Flask, render_template, request
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
 
 # This libray is authored by Tim Keefer here: https://github.com/timotheus/ebaysdk-python
 import ebaysdk
@@ -8,6 +5,10 @@ import ebaysdk
 import ConfigParser
 
 from ebaysdk.finding import Connection as finding
+from flask import Flask, render_template, request
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
+from get_ebay_details import EbayData;
 
 app = Flask(__name__)
 
@@ -29,38 +30,38 @@ def get_bot_response():
     userText = request.args.get('msg')
 
     #Check all words in the config dictionary to see the kind of word.
+    # for keyword in keywords:
+    #     if keyword in userText:
     for keyword in keywords:
         if keyword in userText:
-            return get_ebay_data(config, userText, keyword)         
+            return get_ebay_data(config, keyword)         
             
         else:
-
             return get_regular_trained_data(userText)
-    
-# This method is used to get data based on keywords to see if we can get ebay links based on the API       
 
-def get_ebay_data(config, userText, keyword):
-    
-    site_id = config.get('ebay', 'site_id')
-    app_id = config.get('ebay', 'app_id')
-    max_price = config.get('ebay', 'max_price')
-    min_price = config.get('ebay', 'min_price')
-    sort_order = config.get('ebay', 'sort_order')
+ 
+def get_ebay_data(config, keyword):
+        print "hello"
+        site_id = config.get('ebay', 'site_id')
+        app_id = config.get('ebay', 'app_id')
+        max_price = config.get('ebay', 'max_price')
+        min_price = config.get('ebay', 'min_price')
+        sort_order = config.get('ebay', 'sort_order')
 
-    api = finding(siteid=site_id,appid=app_id, config_file=None)
-    response = api.execute('findItemsAdvanced', {
-            'keywords': keyword,
-            'itemFilter': [
-                {'name': 'Condition', 'value': 'Used'},
-                {'name': 'MinPrice', 'value': min_price, 'paramName': 'Currency', 'paramValue': 'USD'},
-                {'name': 'MaxPrice', 'value': max_price, 'paramName': 'Currency', 'paramValue': 'USD'}
-            ],
-            'sortOrder': sort_order
-        })
+        api = finding(siteid=site_id,appid=app_id, config_file=None)
+        response = api.execute('findItemsAdvanced', {
+                'keywords': keyword,
+                'itemFilter': [
+                    {'name': 'Condition', 'value': 'Used'},
+                    {'name': 'MinPrice', 'value': min_price, 'paramName': 'Currency', 'paramValue': 'USD'},
+                    {'name': 'MaxPrice', 'value': max_price, 'paramName': 'Currency', 'paramValue': 'USD'}
+                ],
+                'sortOrder': sort_order
+            })
 
 
-    item_response = response.dict()
-    return item_response['itemSearchURL']
+        item_response = response.dict()
+        return item_response['itemSearchURL']
  
 
 # This returns regularly trained based on the query using Chatterbot
