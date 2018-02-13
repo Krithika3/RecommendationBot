@@ -146,7 +146,7 @@ class KikBot(Flask):
 
 if __name__ == "__main__":
     """ Main program """
-    kik = KikApi('kvijay3', '1dfdf03c-29a1-4025-8319-605c7ad8e540')
+    kik = KikApi('', '')
     # For simplicity, we're going to set_configuration on startup. However, this really only needs to happen once
     # or if the configuration changes. In a production setting, you would only issue this call if you need to change
     # the configuration, and not every time the bot starts.
